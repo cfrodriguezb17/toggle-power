@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Toggle Power 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-22 05:23-0500\n"
+"POT-Creation-Date: 2026-10-22 07:55-0500\n"
 "PO-Revision-Date: 2026-10-22 00:00+0000\n"
 "Last-Translator: Toggle Power contributors\n"
 "Language-Team: Spanish\n"
@@ -50,55 +50,55 @@ msgstr "Perfil de energía activado"
 msgid "Could not display the power profile notification:"
 msgstr "No se pudo mostrar la notificación del perfil:"
 
-#: scripts/install.py:37
+#: scripts/install.py:36
 msgid "This version supports Lenovo computers only."
 msgstr "Esta versión solo admite equipos Lenovo."
 
-#: scripts/install.py:39
+#: scripts/install.py:38
 msgid "This version supports Intel CPUs only."
 msgstr "Esta versión solo admite procesadores Intel."
 
-#: scripts/install.py:42
+#: scripts/install.py:41
 msgid "The firmware must provide low-power, balanced and performance profiles."
 msgstr ""
 "El firmware debe ofrecer los perfiles low-power, balanced y performance."
 
-#: scripts/install.py:44
+#: scripts/install.py:43
 msgid "Lenovo conservation_mode is unavailable."
 msgstr "El control de conservación de Lenovo no está disponible."
 
-#: scripts/install.py:46
+#: scripts/install.py:45
 msgid "The firmware profile is unavailable."
 msgstr "El perfil del firmware no está disponible."
 
-#: scripts/install.py:54
+#: scripts/install.py:53
 #, python-format
 msgid "%s: both PL1/PL2 constraints must be enabled."
 msgstr "%s: deben estar habilitados ambos límites PL1/PL2."
 
-#: scripts/install.py:57
+#: scripts/install.py:56
 msgid "No supported CPU package RAPL interface found."
 msgstr "No se encontró una interfaz RAPL del paquete CPU compatible."
 
-#: scripts/install.py:70
+#: scripts/install.py:69
 msgid "Build first: cmake -S . -B build && cmake --build build"
 msgstr "Primero compila: cmake -S . -B build && cmake --build build"
 
-#: scripts/install.py:93
+#: scripts/install.py:95
 msgid "--destdir must be a temporary directory, never /."
 msgstr "--destdir debe ser una carpeta temporal, nunca /."
 
-#: scripts/install.py:103
+#: scripts/install.py:105
 #, python-format
 msgid "Administrator-owned, protected path required: %s"
 msgstr "Se requiere una ruta protegida y propiedad de root: %s"
 
-#: scripts/install.py:126
+#: scripts/install.py:128
 #, python-format
 msgid "Refusing to remove an unexpected symlink: %s"
 msgstr "No se eliminará un enlace simbólico inesperado: %s"
 
-#: scripts/install.py:136
+#: scripts/install.py:138
 msgid ""
 "The battery permission was edited or belongs to another account; review it "
 "first."
@@ -106,118 +106,90 @@ msgstr ""
 "El permiso de batería fue editado o pertenece a otra cuenta; revísalo "
 "primero."
 
-#: scripts/install.py:148
+#: scripts/install.py:152
 msgid "The battery permission was edited; remove it manually."
 msgstr "El permiso de batería fue editado; elimínalo manualmente."
 
-#: scripts/install.py:166 scripts/install.py:241
+#: scripts/install.py:174 scripts/install.py:256
 msgid "An unrelated Plasma override already exists."
 msgstr "Ya existe una configuración de Plasma ajena a este proyecto."
 
-#: scripts/install.py:187
+#: scripts/install.py:202
 msgid "KDE did not load the battery integration."
 msgstr "KDE no cargó la integración de batería."
 
-#: scripts/install.py:193
-msgid "The original panel and standalone battery control were restored."
+#: scripts/install.py:207
+msgid ""
+"The standard KDE panel was restored. Check the battery panel update log."
 msgstr ""
-"Se restauraron el panel original y el control independiente de batería."
+"Se restauró el panel normal de KDE. Revisa el registro de actualización del "
+"panel de batería."
 
-#: scripts/install.py:205
+#: scripts/install.py:220
 msgid "Install or remove Toggle Power."
 msgstr "Instalar o eliminar Toggle Power."
 
-#: scripts/install.py:207
+#: scripts/install.py:222
 msgid "Stage files only; never change the host or services"
 msgstr "Preparar archivos únicamente; nunca cambia el sistema ni los servicios"
 
-#: scripts/install.py:208
+#: scripts/install.py:223
 msgid "Target account (staging only)"
 msgstr "Cuenta de destino (solo pruebas temporales)"
 
-#: scripts/install.py:209
+#: scripts/install.py:224
 msgid "Target home (staging only)"
 msgstr "Carpeta de inicio de destino (solo pruebas temporales)"
 
-#: scripts/install.py:215
+#: scripts/install.py:230
 msgid "--system cannot be combined with --destdir"
 msgstr "--system no se puede combinar con --destdir"
 
-#: scripts/install.py:218
+#: scripts/install.py:233
 msgid "An absolute target home without traversal is required."
 msgstr "Se requiere una ruta de inicio absoluta sin componentes de retroceso."
 
-#: scripts/install.py:224
+#: scripts/install.py:239
 msgid "The system stage must be authorized by the invoking user."
 msgstr "La fase de sistema debe estar autorizada por el usuario que instala."
 
-#: scripts/install.py:231
+#: scripts/install.py:246
 msgid "Run as your desktop user, without sudo. --user/--home are staging-only."
 msgstr ""
 "Ejecuta como tu usuario de escritorio, sin sudo. --user/--home son solo para "
 "pruebas temporales."
 
-#: scripts/install.py:236
+#: scripts/install.py:251
 msgid "Install from a KDE Plasma Wayland session."
 msgstr "Instala desde una sesión KDE Plasma Wayland."
 
-#: scripts/install.py:248
+#: scripts/install.py:263
 msgid "Installation complete."
 msgstr "Instalación completada."
 
-#: scripts/install.py:248
+#: scripts/install.py:263
 msgid "Uninstalled. Battery conservation was not changed."
 msgstr "Desinstalación completada. No se cambió la conservación de batería."
 
-#: src/bateria_tray.cpp:41 src/bateria_tray.cpp:43 src/bateria_tray.cpp:83
-msgid "Battery conservation"
-msgstr "Conservación de batería"
+#: scripts/recompilar-panel.py:125
+msgid "Battery panel update failed"
+msgstr "Falló la actualización del panel de batería"
 
-#: src/bateria_tray.cpp:47
+#: scripts/recompilar-panel.py:126
 msgid ""
-"Limit charging to 80% to conserve your battery, or allow a full charge when "
-"needed."
+"KDE will use its standard battery panel. See the Toggle Power update log."
 msgstr ""
-"Activa el límite al 80 % para conservar la batería, o permite una carga "
-"completa cuando la necesites."
-
-#: src/bateria_tray.cpp:53 src/bateria_tray.cpp:71 src/bateria_tray.cpp:88
-#: panel-bateria/LimiteCargaItem.qml:33
-msgid "Limit charge to 80%"
-msgstr "Limitar carga al 80 %"
-
-#: src/bateria_tray.cpp:54 src/bateria_tray.cpp:88
-msgid "Allow charging to 100%"
-msgstr "Permitir carga al 100 %"
-
-#: src/bateria_tray.cpp:58
-msgid "Open controls"
-msgstr "Abrir controles"
-
-#: src/bateria_tray.cpp:59
-msgid "Quit"
-msgstr "Salir"
-
-#: src/bateria_tray.cpp:80 panel-bateria/LimiteCargaItem.qml:52
-msgid "Battery conservation enabled"
-msgstr "Conservación de batería activada"
-
-#: src/bateria_tray.cpp:81 panel-bateria/LimiteCargaItem.qml:53
-msgid "Off · Charging to 100% allowed"
-msgstr "Desactivado · Carga al 100 % permitida"
-
-#: src/bateria_tray.cpp:81 panel-bateria/conservationcontrol.cpp:40
-#: panel-bateria/LimiteCargaItem.qml:54
-msgid "Battery conservation is unavailable"
-msgstr "Control de conservación no disponible"
-
-#: src/bateria_tray.cpp:84 panel-bateria/LimiteCargaItem.qml:51
-msgid "Applying charge limit…"
-msgstr "Aplicando límite de carga…"
+"KDE usará su panel normal de batería. Revisa el registro de actualización de "
+"Toggle Power."
 
 #: panel-bateria/conservationcontrol.cpp:14
 msgid "Could not start system authorization."
 msgstr "No se pudo iniciar la autorización del sistema."
+
+#: panel-bateria/conservationcontrol.cpp:40
+#: panel-bateria/LimiteCargaItem.qml:54
+msgid "Battery conservation is unavailable"
+msgstr "Control de conservación no disponible"
 
 #: panel-bateria/conservationcontrol.cpp:59
 msgid "Authorization cancelled. The charge limit was not changed."
@@ -226,3 +198,19 @@ msgstr "Autorización cancelada. No se cambió el límite."
 #: panel-bateria/conservationcontrol.cpp:61
 msgid "Could not confirm the charge limit change."
 msgstr "No se pudo confirmar el cambio del límite de carga."
+
+#: panel-bateria/LimiteCargaItem.qml:33
+msgid "Limit charge to 80%"
+msgstr "Limitar carga al 80 %"
+
+#: panel-bateria/LimiteCargaItem.qml:51
+msgid "Applying charge limit…"
+msgstr "Aplicando límite de carga…"
+
+#: panel-bateria/LimiteCargaItem.qml:52
+msgid "Battery conservation enabled"
+msgstr "Conservación de batería activada"
+
+#: panel-bateria/LimiteCargaItem.qml:53
+msgid "Off · Charging to 100% allowed"
+msgstr "Desactivado · Carga al 100 % permitida"

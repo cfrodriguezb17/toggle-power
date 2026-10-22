@@ -22,10 +22,24 @@ class InstallTest(unittest.TestCase):
             self.assertEqual(helper.stat().st_mode & 0o777,0o755)
             self.assertIn('subject.local && subject.active',rule.read_text())
             self.assertTrue(deployment.path('/home/demo/.config/systemd/user/lenovo-mode-indicator.service').is_file())
+            self.assertTrue(deployment.path('/home/demo/.config/systemd/user/lenovo-battery-panel-update.timer').is_file())
+            self.assertTrue(deployment.path('/home/demo/.local/share/lenovo-battery-panel/source/CMakeLists.txt').is_file())
+            self.assertFalse(deployment.path('/usr/local/lib/lenovo-modes/lenovo-bateria').exists())
             deployment.session('uninstall',Path('/home/demo'))
             deployment.system('uninstall','demo')
             self.assertFalse(rule.exists()); self.assertFalse(helper.exists())
             self.assertFalse([p for p in Path(directory).rglob('*') if p.is_file()])
+
+    def test_install_removes_legacy_files(self):
+        with tempfile.TemporaryDirectory() as directory:
+            deployment=Deployment(directory)
+            paths=('/usr/local/lib/lenovo-modes/lenovo-bateria',
+                   '/usr/local/share/applications/lenovo-bateria.desktop',
+                   '/home/demo/.config/systemd/user/lenovo-battery-tray.service')
+            for path in paths: deployment.write(Path(path), 'legacy')
+            deployment.system('install','demo')
+            deployment.session('install',Path('/home/demo'))
+            for path in paths: self.assertFalse(deployment.path(path).exists())
 
     def test_staging_cli_follows_spanish_locale(self):
         with tempfile.TemporaryDirectory() as directory:

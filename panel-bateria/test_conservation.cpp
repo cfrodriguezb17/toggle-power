@@ -9,7 +9,7 @@ class TestConservation : public QObject {
 private slots:
     void messagesFollowSessionLanguage() {
         if (qEnvironmentVariable("LANGUAGE") == "es") {
-            QCOMPARE(i18nd("lenovo-modes", "Battery conservation"), QString::fromUtf8("Conservación de batería"));
+            QCOMPARE(i18nd("lenovo-modes", "Limit charge to 80%"), QString::fromUtf8("Limitar carga al 80 %"));
             QCOMPARE(i18nd("lenovo-modes", "Could not confirm the charge limit change."),
                      QString::fromUtf8("No se pudo confirmar el cambio del límite de carga."));
         }

@@ -63,11 +63,10 @@ def compatible(expected):
 
 
 def check_build():
-    for file in ('lenovo-bateria', 'plugins/plasma/applets/org.kde.plasma.battery.so',
+    for file in ('plugins/plasma/applets/org.kde.plasma.battery.so',
                  'share/locale/es/LC_MESSAGES/lenovo-modes.mo', 'kde-version.txt'):
         if not (ROOT / 'build' / file).is_file():
             raise RuntimeError(_('Build first: cmake -S . -B build && cmake --build build'))
-    compatible(ROOT / 'panel-bateria/kde-version.txt')
     compatible(ROOT / 'build/kde-version.txt')
 
 
@@ -75,14 +74,18 @@ def system_files():
     files = [(ROOT / 'src' / name, RUNTIME / name, 0o644) for name in
              ('potencia_servicio.py', 'indicador_servicio.py', 'indicador.qml', 'perfiles.py', 'i18n.py')]
     files += [(ROOT / 'src/bateria_control.py', RUNTIME / 'bateria-control', 0o755),
-              (ROOT / 'build/lenovo-bateria', RUNTIME / 'lenovo-bateria', 0o755),
               (ROOT / 'data/org.local.lenovo-modes.battery.policy',
                Path('/usr/share/polkit-1/actions/org.local.lenovo-modes.battery.policy'), 0o644),
-              (ROOT / 'data/lenovo-bateria.desktop', Path('/usr/local/share/applications/lenovo-bateria.desktop'), 0o644),
               (ROOT / 'data/systemd/lenovo-power-modes.service', Path('/etc/systemd/system/lenovo-power-modes.service'), 0o644),
               (ROOT / 'build/share/locale/es/LC_MESSAGES/lenovo-modes.mo',
                Path('/usr/local/share/locale/es/LC_MESSAGES/lenovo-modes.mo'), 0o644)]
     return files
+
+
+def panel_source_files():
+    """Install a build kit independent of the original checkout."""
+    return [ROOT / 'CMakeLists.txt', ROOT / 'po/es.po',
+            *sorted(path for path in (ROOT / 'panel-bateria').iterdir() if path.is_file())]
 
 
 class Deployment:
@@ -133,6 +136,8 @@ class Deployment:
         rule = Path('/etc/polkit-1/rules.d/49-lenovo-battery.rules')
         if self.path(rule).exists() and self.path(rule).read_text() != battery_rule(user):
             raise RuntimeError(_('The battery permission was edited or belongs to another account; review it first.'))
+        for legacy in (RUNTIME / 'lenovo-bateria', Path('/usr/local/share/applications/lenovo-bateria.desktop')):
+            self.remove(legacy)
         if operation == 'install':
             for source, target, mode in system_files():
                 self.copy(source, target, mode, administrator=True)
@@ -155,24 +160,36 @@ class Deployment:
         data = home / '.local/share/lenovo-battery-panel'
         override = config / 'plasma-plasmashell.service.d/60-lenovo-battery-panel.conf'
         files = [(ROOT / 'scripts/iniciar-panel-bateria.sh', data / 'iniciar-panel-bateria.sh', 0o755),
+                 (ROOT / 'scripts/recompilar-panel.py', data / 'recompilar-panel.py', 0o644),
                  (ROOT / 'scripts/versiones-panel-bateria.sh', data / 'versiones-panel-bateria.sh', 0o644),
                  (ROOT / 'build/kde-version.txt', data / 'kde-version.txt', 0o644),
                  (ROOT / 'build/plugins/plasma/applets/org.kde.plasma.battery.so',
                   data / 'plugins/plasma/applets/org.kde.plasma.battery.so', 0o755)]
-        for service in ('lenovo-mode-indicator.service', 'lenovo-battery-tray.service'):
+        files.extend((source, data / 'source' / source.relative_to(ROOT), 0o644) for source in panel_source_files())
+        services = ('lenovo-mode-indicator.service', 'lenovo-battery-panel-update.service',
+                    'lenovo-battery-panel-update.timer')
+        for service in services:
             files.append((ROOT / 'data/systemd' / service, config / service, 0o644))
         if self.path(override).exists() and '# Lenovo battery panel' not in self.path(override).read_text():
             raise RuntimeError(_('An unrelated Plasma override already exists.'))
+        legacy = config / 'lenovo-battery-tray.service'
+        if self.path(legacy).exists():
+            self.run('systemctl', '--user', 'disable', '--now', 'lenovo-battery-tray.service')
+            self.remove(legacy)
         if operation == 'install':
+            # Stop an older updater before replacing its source files.
+            if self.path(config / 'lenovo-battery-panel-update.timer').exists():
+                self.run('systemctl', '--user', 'stop', 'lenovo-battery-panel-update.timer', 'lenovo-battery-panel-update.service')
             for source, target, mode in files:
                 self.copy(source, target, mode)
             # systemd specifiers and quotes must remain literal in the executable path.
             executable = str(data / 'iniciar-panel-bateria.sh').replace('%', '%%').replace('\\', '\\\\').replace('"', '\\"')
-            self.write(override, '# Lenovo battery panel\n[Service]\nExecStart=\nExecStart="' + executable + '"\n')
+            self.write(override, '# Lenovo battery panel\n[Service]\nTimeoutStartSec=12min\nExecStart=\nExecStart="' + executable + '"\n')
             self.run('systemctl', '--user', 'daemon-reload')
             self.run('systemctl', '--user', 'enable', '--now', 'lenovo-mode-indicator.service')
-            self.run('systemctl', '--user', 'disable', '--now', 'lenovo-battery-tray.service')
+            self.run('systemctl', '--user', 'enable', '--now', 'lenovo-battery-panel-update.timer')
             try:
+                self.run('/usr/bin/python3', '-B', str(data / 'recompilar-panel.py'))
                 self.run('systemctl', '--user', 'restart', 'plasma-plasmashell.service')
                 if not self.stage:
                     pid = subprocess.check_output(['systemctl', '--user', 'show', 'plasma-plasmashell.service',
@@ -188,11 +205,11 @@ class Deployment:
                 self.remove(override)
                 self.run('systemctl', '--user', 'daemon-reload')
                 self.run('systemctl', '--user', 'restart', 'plasma-plasmashell.service')
-                self.run('systemctl', '--user', 'start', 'lenovo-battery-tray.service')
-                raise RuntimeError(_('The original panel and standalone battery control were restored.'))
+                raise RuntimeError(_('The standard KDE panel was restored. Check the battery panel update log.'))
         else:
-            for service in ('lenovo-mode-indicator.service', 'lenovo-battery-tray.service'):
+            for service in ('lenovo-mode-indicator.service', 'lenovo-battery-panel-update.timer'):
                 self.run('systemctl', '--user', 'disable', '--now', service)
+            self.run('systemctl', '--user', 'stop', 'lenovo-battery-panel-update.service')
             self.remove(override)
             for source_unused, target, mode_unused in files:
                 self.remove(target)

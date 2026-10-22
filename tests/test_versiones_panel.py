@@ -38,8 +38,8 @@ class VersionCompatibilityTest(unittest.TestCase):
     def test_qt_upstream_change_is_rejected(self):
         self.assertFalse(self.compare(BASELINE.replace("qt6-declarative 6.12.0", "qt6-declarative 6.13.0")))
 
-    def test_plasma_upstream_change_is_rejected(self):
-        self.assertFalse(self.compare(BASELINE.replace("powerdevil 6.8.0", "powerdevil 6.8.1")))
+    def test_plasma_upstream_change_requires_rebuild(self):
+        self.assertFalse(self.compare(BASELINE.replace("powerdevil 6.8.1", "powerdevil 6.8.2")))
 
     def test_epoch_is_preserved(self):
         with_epoch = BASELINE.replace("qt6-base 6.", "qt6-base 1:6.")
@@ -48,7 +48,7 @@ class VersionCompatibilityTest(unittest.TestCase):
 
     def test_incomplete_or_invalid_input_is_rejected(self):
         for bad in ("", "\n".join(BASELINE.splitlines()[:-1]),
-                    BASELINE.replace("qt6-declarative 6.12.0-1.1", "qt6-declarative invalid")):
+                    BASELINE.replace(next(line for line in BASELINE.splitlines() if line.startswith("qt6-declarative ")), "qt6-declarative invalid")):
             with self.subTest(actual=bad):
                 self.assertFalse(self.compare(bad))
 

@@ -41,7 +41,7 @@ Installation requests administrator authorization. It generates a Polkit rule al
 
 ## Why did the battery switch disappear after a KDE or Qt update?
 
-An unsupported upstream version activates the original KDE battery panel and standalone tray control. The reviewed popup currently targets **PowerDevil/Plasma 6.8.0 and Qt 6.12.0**. Arch package-revision changes are accepted; upstream version changes need a reviewed integration update. See [the baseline](../panel-bateria/kde-version.txt) and [the launcher](../scripts/iniciar-panel-bateria.sh).
+The integration now recompiles automatically at login and after KDE/Qt updates, using an installed source kit and your desktop account. Keep the documented build dependencies installed. The latest verified versions are **PowerDevil/Plasma 6.8.1 and Qt 6.12.0**; packaging-only changes do not trigger compilation. If compilation or validation fails, KDE uses its standard battery panel and shows an update notification. No standalone tray application is installed or started. Check `journalctl --user -u lenovo-battery-panel-update.service -b`, or the Plasma startup log for a login-time failure, and follow the [retry command](../README.md#troubleshooting). Future incompatible APIs can still require a source update.
 
 ## How do I use the interface in English or Spanish?
 

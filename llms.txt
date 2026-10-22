@@ -2,7 +2,7 @@
 
 > Open-source Lenovo Intel laptop utilities for Arch Linux/CachyOS with KDE Plasma Wayland: an 80% battery conservation toggle, a centered Fn+Q firmware power-profile indicator, and verified Intel RAPL PL1/PL2 limits.
 
-Tested hardware: Lenovo Slim 7 14ILL10 (83MC), Intel Core Ultra 200V. The reviewed battery popup targets PowerDevil/Plasma 6.8.0 and Qt 6.12.0; packaging revisions may differ. Other hardware or platforms require adaptation. Runtime interface languages are English and Spanish; project documentation is English.
+Tested hardware: Lenovo Slim 7 14ILL10 (83MC), Intel Core Ultra 200V. The battery popup is verified with PowerDevil/Plasma 6.8.1 and Qt 6.12.0. It rebuilds locally after KDE/Qt updates, with the standard KDE panel used if verification fails; no standalone tray control is included. Other hardware or platforms require adaptation. Runtime interface languages are English and Spanish; project documentation is English.
 
 This is a local desktop application, with no ChatGPT or Claude runtime dependency. The application provides power controls; a battery-runtime improvement has not been established. This file is a documentation navigation aid following the llms.txt proposal, not an indexing or ranking guarantee.
 

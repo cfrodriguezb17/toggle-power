@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Toggle Power 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-22 05:23-0500\n"
+"POT-Creation-Date: 2026-10-22 07:55-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -53,165 +53,136 @@ msgstr ""
 msgid "Could not display the power profile notification:"
 msgstr ""
 
-#: scripts/install.py:37
+#: scripts/install.py:36
 msgid "This version supports Lenovo computers only."
 msgstr ""
 
-#: scripts/install.py:39
+#: scripts/install.py:38
 msgid "This version supports Intel CPUs only."
 msgstr ""
 
-#: scripts/install.py:42
+#: scripts/install.py:41
 msgid "The firmware must provide low-power, balanced and performance profiles."
 msgstr ""
 
-#: scripts/install.py:44
+#: scripts/install.py:43
 msgid "Lenovo conservation_mode is unavailable."
 msgstr ""
 
-#: scripts/install.py:46
+#: scripts/install.py:45
 msgid "The firmware profile is unavailable."
 msgstr ""
 
-#: scripts/install.py:54
+#: scripts/install.py:53
 #, python-format
 msgid "%s: both PL1/PL2 constraints must be enabled."
 msgstr ""
 
-#: scripts/install.py:57
+#: scripts/install.py:56
 msgid "No supported CPU package RAPL interface found."
 msgstr ""
 
-#: scripts/install.py:70
+#: scripts/install.py:69
 msgid "Build first: cmake -S . -B build && cmake --build build"
 msgstr ""
 
-#: scripts/install.py:93
+#: scripts/install.py:95
 msgid "--destdir must be a temporary directory, never /."
 msgstr ""
 
-#: scripts/install.py:103
+#: scripts/install.py:105
 #, python-format
 msgid "Administrator-owned, protected path required: %s"
 msgstr ""
 
-#: scripts/install.py:126
+#: scripts/install.py:128
 #, python-format
 msgid "Refusing to remove an unexpected symlink: %s"
 msgstr ""
 
-#: scripts/install.py:136
+#: scripts/install.py:138
 msgid ""
 "The battery permission was edited or belongs to another account; review it "
 "first."
 msgstr ""
 
-#: scripts/install.py:148
+#: scripts/install.py:152
 msgid "The battery permission was edited; remove it manually."
 msgstr ""
 
-#: scripts/install.py:166 scripts/install.py:241
+#: scripts/install.py:174 scripts/install.py:256
 msgid "An unrelated Plasma override already exists."
 msgstr ""
 
-#: scripts/install.py:187
+#: scripts/install.py:202
 msgid "KDE did not load the battery integration."
 msgstr ""
 
-#: scripts/install.py:193
-msgid "The original panel and standalone battery control were restored."
+#: scripts/install.py:207
+msgid ""
+"The standard KDE panel was restored. Check the battery panel update log."
 msgstr ""
 
-#: scripts/install.py:205
+#: scripts/install.py:220
 msgid "Install or remove Toggle Power."
 msgstr ""
 
-#: scripts/install.py:207
+#: scripts/install.py:222
 msgid "Stage files only; never change the host or services"
 msgstr ""
 
-#: scripts/install.py:208
+#: scripts/install.py:223
 msgid "Target account (staging only)"
 msgstr ""
 
-#: scripts/install.py:209
+#: scripts/install.py:224
 msgid "Target home (staging only)"
 msgstr ""
 
-#: scripts/install.py:215
+#: scripts/install.py:230
 msgid "--system cannot be combined with --destdir"
 msgstr ""
 
-#: scripts/install.py:218
+#: scripts/install.py:233
 msgid "An absolute target home without traversal is required."
 msgstr ""
 
-#: scripts/install.py:224
+#: scripts/install.py:239
 msgid "The system stage must be authorized by the invoking user."
 msgstr ""
 
-#: scripts/install.py:231
+#: scripts/install.py:246
 msgid "Run as your desktop user, without sudo. --user/--home are staging-only."
 msgstr ""
 
-#: scripts/install.py:236
+#: scripts/install.py:251
 msgid "Install from a KDE Plasma Wayland session."
 msgstr ""
 
-#: scripts/install.py:248
+#: scripts/install.py:263
 msgid "Installation complete."
 msgstr ""
 
-#: scripts/install.py:248
+#: scripts/install.py:263
 msgid "Uninstalled. Battery conservation was not changed."
 msgstr ""
 
-#: src/bateria_tray.cpp:41 src/bateria_tray.cpp:43 src/bateria_tray.cpp:83
-msgid "Battery conservation"
+#: scripts/recompilar-panel.py:125
+msgid "Battery panel update failed"
 msgstr ""
 
-#: src/bateria_tray.cpp:47
+#: scripts/recompilar-panel.py:126
 msgid ""
-"Limit charging to 80% to conserve your battery, or allow a full charge when "
-"needed."
-msgstr ""
-
-#: src/bateria_tray.cpp:53 src/bateria_tray.cpp:71 src/bateria_tray.cpp:88
-#: panel-bateria/LimiteCargaItem.qml:33
-msgid "Limit charge to 80%"
-msgstr ""
-
-#: src/bateria_tray.cpp:54 src/bateria_tray.cpp:88
-msgid "Allow charging to 100%"
-msgstr ""
-
-#: src/bateria_tray.cpp:58
-msgid "Open controls"
-msgstr ""
-
-#: src/bateria_tray.cpp:59
-msgid "Quit"
-msgstr ""
-
-#: src/bateria_tray.cpp:80 panel-bateria/LimiteCargaItem.qml:52
-msgid "Battery conservation enabled"
-msgstr ""
-
-#: src/bateria_tray.cpp:81 panel-bateria/LimiteCargaItem.qml:53
-msgid "Off · Charging to 100% allowed"
-msgstr ""
-
-#: src/bateria_tray.cpp:81 panel-bateria/conservationcontrol.cpp:40
-#: panel-bateria/LimiteCargaItem.qml:54
-msgid "Battery conservation is unavailable"
-msgstr ""
-
-#: src/bateria_tray.cpp:84 panel-bateria/LimiteCargaItem.qml:51
-msgid "Applying charge limit…"
+"KDE will use its standard battery panel. See the Toggle Power update log."
 msgstr ""
 
 #: panel-bateria/conservationcontrol.cpp:14
 msgid "Could not start system authorization."
+msgstr ""
+
+#: panel-bateria/conservationcontrol.cpp:40
+#: panel-bateria/LimiteCargaItem.qml:54
+msgid "Battery conservation is unavailable"
 msgstr ""
 
 #: panel-bateria/conservationcontrol.cpp:59
@@ -220,4 +191,20 @@ msgstr ""
 
 #: panel-bateria/conservationcontrol.cpp:61
 msgid "Could not confirm the charge limit change."
+msgstr ""
+
+#: panel-bateria/LimiteCargaItem.qml:33
+msgid "Limit charge to 80%"
+msgstr ""
+
+#: panel-bateria/LimiteCargaItem.qml:51
+msgid "Applying charge limit…"
+msgstr ""
+
+#: panel-bateria/LimiteCargaItem.qml:52
+msgid "Battery conservation enabled"
+msgstr ""
+
+#: panel-bateria/LimiteCargaItem.qml:53
+msgid "Off · Charging to 100% allowed"
 msgstr ""

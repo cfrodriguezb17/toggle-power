@@ -11,7 +11,7 @@
 | CPU power control | Apply and verify PL1/PL2 through available Intel RAPL MSR/MMIO interfaces |
 | Supported environment | Arch Linux / CachyOS, KDE Plasma, Wayland, supported Lenovo Intel hardware |
 | Tested laptop | Lenovo Slim 7 14ILL10 (83MC), Intel Core Ultra 200V |
-| Reviewed panel versions | PowerDevil/Plasma 6.8.0 and Qt 6.12.0; Arch packaging revisions may differ |
+| Reviewed panel versions | PowerDevil/Plasma 6.8.1 and Qt 6.12.0; automatic rebuilds after updates |
 | Interface languages | English and Spanish, selected from the session language |
 | Documentation | English |
 | License | GPL-3.0-or-later for original code; retained KDE notices for adapted files |
@@ -33,7 +33,7 @@ After installation, open KDE's **Power & Battery** popup and use **Limit charge 
 - **Enabled:** activate Lenovo firmware battery conservation mode.
 - **Disabled:** allow charging to 100%.
 
-The switch reads back the driver's state after an operation and reports cancellation or failure. A separate battery tray application is available when the integrated panel cannot load. Installation preserves the current conservation setting.
+The switch reads back the driver's state after an operation and reports cancellation or failure. The integrated popup is the only battery control; the older standalone tray application has been removed. Installation preserves the current conservation setting.
 
 ## Fn+Q power profiles and CPU power limits
 
@@ -53,7 +53,9 @@ The system service rechecks the limits and records confirmed values in `/run/len
 
 The current installer targets **Arch/CachyOS with KDE Plasma Wayland and Intel CPUs**. It checks Lenovo firmware profiles, `conservation_mode`, and enabled CPU-package Intel RAPL constraints before starting services. AMD processors, other desktops and other distributions need implementation work and validation.
 
-The bundled battery popup is based on **PowerDevil/Plasma 6.8.0 and Qt 6.12.0**. Upstream versions must match the reviewed versions in [the compatibility baseline](panel-bateria/kde-version.txt); Arch package revisions may differ. After an unsupported upstream update, the launcher uses the original KDE panel and the standalone battery control until the integration is reviewed.
+The bundled battery popup originates from PowerDevil 6.8.0 and is verified with **PowerDevil/Plasma 6.8.1 and Qt 6.12.0**. The installer saves a self-contained source kit in `~/.local/share/lenovo-battery-panel/source`. Keep the build dependencies installed: the integration recompiles as your desktop user at login when needed and checks for KDE/Qt updates every two minutes during the session. It waits until the package transaction has finished, builds locally, runs controller tests and checks the plugin and a simulated popup before replacing the integration and reloading Plasma. Arch packaging-only revisions do not trigger a rebuild.
+
+Compilation is a compatibility check, not a guarantee of compatibility with every future KDE interface. A failed build leaves the previous plugin file intact, reports a notification and uses the standard KDE panel at the next launch. The standalone tray control is never started. Failed source/package combinations are not rebuilt repeatedly; a new version or source change retries automatically. No administrator password or network download is needed for these rebuilds.
 
 ## Build and install on Arch Linux or CachyOS
 
@@ -92,8 +94,16 @@ This removes the project's installed files and services, restores the original K
 ```sh
 systemctl status lenovo-power-modes.service
 systemctl --user status lenovo-mode-indicator.service plasma-plasmashell.service
+systemctl --user status lenovo-battery-panel-update.timer
+journalctl --user -u lenovo-battery-panel-update.service -b
 cat /run/lenovo-power-modes/status.json
 cat /sys/bus/platform/devices/VPC2004:00/conservation_mode
+```
+
+To retry a failed compilation after correcting the cause:
+
+```sh
+python3 -B ~/.local/share/lenovo-battery-panel/recompilar-panel.py --force --restart
 ```
 
 The conservation control reports `1` when enabled and `0` when disabled. The status JSON reports the firmware profile and verification results for each available power interface. See the [FAQ](docs/FAQ.md) for update fallback behavior and hardware limitations.

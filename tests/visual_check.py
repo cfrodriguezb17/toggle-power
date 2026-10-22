@@ -26,10 +26,7 @@ for language in ('en','es','es_CO','fr_FR'):
     subprocess.run([str(ROOT/'build/panel-bateria/preview_panel'),
                     str(ROOT/'panel-bateria/preview.qml'),str(output/f'battery-{language}.png'),expected],
                    env=env,check=True,timeout=25)
-    tray=subprocess.run([str(ROOT/'build/lenovo-bateria'),'--preview',str(output/f'tray-{language}.png')],
-                        env=env,check=True,timeout=15,capture_output=True,text=True)
-    if expected not in tray.stdout: raise RuntimeError('Tray locale mismatch: '+tray.stdout)
-    print(f'Battery/popup/tray: {language}',flush=True)
+    print(f'Battery popup: {language}',flush=True)
 for language in ('en','es'):
     env=dict(base,LANGUAGE=language)
     os.environ['LANGUAGE']=language
@@ -40,4 +37,4 @@ for language in ('en','es'):
                         str(output/f'osd-{language}-{mode}.png'),payload['name'],json.dumps(payload,ensure_ascii=False)],
                        env=env,check=True,timeout=15)
         print(f'OSD: {language}/{mode}',flush=True)
-print('14 offscreen visual checks passed. Images: build/previews/',flush=True)
+print('10 offscreen visual checks passed. Images: build/previews/',flush=True)

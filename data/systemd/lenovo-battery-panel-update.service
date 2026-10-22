@@ -1,0 +1,12 @@
+[Unit]
+Description=Rebuild Toggle Power battery panel after KDE/Qt updates
+PartOf=graphical-session.target
+After=graphical-session.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 -B %h/.local/share/lenovo-battery-panel/recompilar-panel.py --restart
+TimeoutStartSec=12min
+Nice=10
+IOSchedulingClass=idle
+NoNewPrivileges=yes
