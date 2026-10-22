@@ -1,0 +1,187 @@
+/*
+    SPDX-FileCopyrightText: 2011 Viranch Mehta <viranch.mehta@gmail.com>
+    SPDX-FileCopyrightText: 2013-2016 Kai Uwe Broulik <kde@privat.broulik.de>
+
+    SPDX-License-Identifier: LGPL-2.0-or-later
+*/
+pragma ComponentBehavior: Bound
+
+import QtQuick
+
+import org.kde.plasma.components as PlasmaComponents3
+import org.kde.plasma.extras as PlasmaExtras
+import org.kde.kirigami as Kirigami
+
+PlasmaExtras.Representation {
+    id: dialog
+
+    required property var conservationControl
+    property alias model: batteryRepeater.model
+    property bool pluggedIn
+    property int chargeStopThreshold
+    property bool isManuallyInhibited
+    property bool isManuallyInhibitedError
+
+    property int remainingTime
+
+    property bool profilesInstalled
+    property string activeProfile
+    property string activeProfileError
+    property var profiles
+
+    property bool isTlpInstalled
+
+    // List of currently requested power management inhibitions (applications that
+    // are blocking sleep and screen locking). Not all are necessarily active.
+    //
+    // type: [{
+    //  appName: string,
+    //  prettyName: string,
+    //  icon: string,
+    //  reason: string,
+    //  behaviors: array<string>, // what's inhibited: "idle", "sleep", both, or any future inhibition types
+    //  active: bool,
+    //  allowed: bool,
+    // }]
+    property var requestedInhibitions: []
+    property bool inhibitsLidAction
+
+    property string inhibitionReason
+    property string degradationReason
+    // type: [{ name: string, icon: string, profile: string, reason: string }]
+    required property var profileHolds
+
+    signal inhibitionChangeRequested(bool inhibit)
+    signal inhibitionAllowedRequested(string appName, string reason, bool allowed)
+    signal activateProfileRequested(string profile)
+
+    collapseMarginsHint: true
+
+    KeyNavigation.down: batteryRepeater.headerItem
+
+    contentItem: PlasmaComponents3.ScrollView {
+        id: scrollView
+
+        focus: false
+
+        function positionViewAtItem(item: Item): void {
+            if (!PlasmaComponents3.ScrollBar.vertical.visible) {
+                return;
+            }
+            const rect = batteryRepeater.contentItem.mapFromItem(item, 0, 0, item.width, item.height);
+            const flickable = scrollView.contentItem as Flickable
+            if (rect.y < flickable.contentY) {
+                flickable.contentY = rect.y;
+            } else if (rect.y + rect.height > flickable.contentY + scrollView.height) {
+                flickable.contentY = rect.y + rect.height - scrollView.height;
+            }
+        }
+
+        ListView {
+            id: batteryRepeater
+
+            spacing: Kirigami.Units.smallSpacing * 2
+
+            // Note: this Column prevents ListView from throwing a cryptic warning and breaking CI:
+            // > QQmlComponent: Cannot create new component instance before completing the previous
+            // However, it also the source of a bug that the view is slightly scrollable for no reason.
+            header: Column {
+                width: scrollView.availableWidth
+
+                PowerProfileItem {
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+
+                    KeyNavigation.up: batteryRepeater.footerItem
+                    KeyNavigation.down: batteryRepeater.count > 0 ? batteryRepeater.itemAtIndex(0) : batteryRepeater.footerItem
+                    KeyNavigation.backtab: KeyNavigation.up
+                    KeyNavigation.tab: KeyNavigation.down
+
+                    profilesInstalled: dialog.profilesInstalled
+                    profilesAvailable: dialog.profiles.length > 0
+                    activeProfile: dialog.activeProfile
+                    activeProfileError: dialog.activeProfileError
+                    inhibitionReason: dialog.inhibitionReason
+                    degradationReason: dialog.degradationReason
+                    profileHolds: dialog.profileHolds
+
+                    isTlpInstalled: dialog.isTlpInstalled
+
+                    onActivateProfileRequested: profile => {
+                        dialog.activateProfileRequested(profile);
+                    }
+
+                    onActiveFocusChanged: if (activeFocus) scrollView.positionViewAtItem(this)
+                }
+            }
+
+            delegate: BatteryItem {
+                required property var model // can't use individual required properties as the names are upper case
+                required property int index
+
+                width: scrollView.availableWidth
+
+                batteryPercent: model.Percent
+                batteryCapacity: model.Capacity
+                batteryEnergy: model.Energy
+                batteryPluggedIn: model.PluggedIn
+                batteryIsPowerSupply: model.IsPowerSupply
+                batteryChargeState: model.ChargeState
+                batteryPrettyName: model.PrettyName
+                batteryType: model.Type
+                remainingTime: dialog.remainingTime
+
+                KeyNavigation.up: index === 0 ? null : batteryRepeater.itemAtIndex(index - 1)
+                KeyNavigation.down: index + 1 < batteryRepeater.count ? batteryRepeater.itemAtIndex(index + 1) : batteryRepeater.footerItem
+
+                pluggedIn: dialog.pluggedIn
+                chargeStopThreshold: dialog.chargeStopThreshold
+
+                KeyNavigation.backtab: KeyNavigation.up
+                KeyNavigation.tab: KeyNavigation.down
+
+                Keys.onTabPressed: event => {
+                    if (index === batteryRepeater.count - 1) {
+                        // Workaround to leave applet's focus on desktop
+                        nextItemInFocusChain(false).forceActiveFocus(Qt.TabFocusReason);
+                    } else {
+                        event.accepted = false;
+                    }
+                }
+
+                onActiveFocusChanged: if (activeFocus) scrollView.positionViewAtItem(this)
+            }
+
+            footer: Column {
+                width: scrollView.availableWidth
+                InhibitionItem {
+                    id: inhibitionItem
+                    width: scrollView.availableWidth
+
+                    KeyNavigation.up: batteryRepeater.itemAtIndex(batteryRepeater.count - 1)
+                    KeyNavigation.down: chargeLimit.toggle
+                    KeyNavigation.backtab:KeyNavigation.up
+
+                    requestedInhibitions: dialog.requestedInhibitions
+                    isManuallyInhibited: dialog.isManuallyInhibited
+                    isManuallyInhibitedError: dialog.isManuallyInhibitedError
+                    inhibitsLidAction: dialog.inhibitsLidAction
+                    pluggedIn: dialog.pluggedIn
+
+                    onInhibitionChangeRequested: inhibit => dialog.inhibitionChangeRequested(inhibit)
+                    onInhibitionAllowedRequested: (name, reason, allowed) => dialog.inhibitionAllowedRequested(name, reason, allowed)
+
+                    onActiveFocusChanged: if (activeFocus) scrollView.positionViewAtItem(this)
+                }
+                LimiteCargaItem {
+                    id: chargeLimit
+                    width: scrollView.availableWidth
+                    control: dialog.conservationControl
+                    KeyNavigation.up: inhibitionItem
+                    KeyNavigation.backtab: inhibitionItem
+                    onActiveFocusChanged: if (activeFocus) scrollView.positionViewAtItem(this)
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Name=Battery Conservation
+Name[es]=Conservación de batería
+Comment=Switch between 80% charging and a full charge
+Comment[es]=Alternar entre el límite al 80 % y la carga completa
+Exec=/usr/local/lib/lenovo-modes/lenovo-bateria
+Icon=battery
+Terminal=false
+Categories=Settings;HardwareSettings;
+Keywords=battery;Lenovo;conservation;charging;80;100;
+Keywords[es]=batería;bateria;Lenovo;conservación;carga;80;100;
+StartupNotify=false

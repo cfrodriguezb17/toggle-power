@@ -1,0 +1,223 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Toggle Power contributors
+# This file is distributed under the same license as the Toggle Power package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Toggle Power 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-22 05:23-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/perfiles.py:17
+msgid "Power Save"
+msgstr ""
+
+#: src/perfiles.py:18
+msgid "Balanced"
+msgstr ""
+
+#: src/perfiles.py:19
+msgid "Performance"
+msgstr ""
+
+#: src/perfiles.py:28
+msgid "POWER MODE"
+msgstr ""
+
+#: src/perfiles.py:28 src/perfiles.py:82
+msgid "Toggle Power"
+msgstr ""
+
+#: src/perfiles.py:65
+msgid "The centered indicator failed; using desktop notifications."
+msgstr ""
+
+#: src/perfiles.py:78
+msgid "No indicator is available. Install qml6 or notify-send."
+msgstr ""
+
+#: src/perfiles.py:85
+msgid "Power profile activated"
+msgstr ""
+
+#: src/perfiles.py:90
+msgid "Could not display the power profile notification:"
+msgstr ""
+
+#: scripts/install.py:37
+msgid "This version supports Lenovo computers only."
+msgstr ""
+
+#: scripts/install.py:39
+msgid "This version supports Intel CPUs only."
+msgstr ""
+
+#: scripts/install.py:42
+msgid "The firmware must provide low-power, balanced and performance profiles."
+msgstr ""
+
+#: scripts/install.py:44
+msgid "Lenovo conservation_mode is unavailable."
+msgstr ""
+
+#: scripts/install.py:46
+msgid "The firmware profile is unavailable."
+msgstr ""
+
+#: scripts/install.py:54
+#, python-format
+msgid "%s: both PL1/PL2 constraints must be enabled."
+msgstr ""
+
+#: scripts/install.py:57
+msgid "No supported CPU package RAPL interface found."
+msgstr ""
+
+#: scripts/install.py:70
+msgid "Build first: cmake -S . -B build && cmake --build build"
+msgstr ""
+
+#: scripts/install.py:93
+msgid "--destdir must be a temporary directory, never /."
+msgstr ""
+
+#: scripts/install.py:103
+#, python-format
+msgid "Administrator-owned, protected path required: %s"
+msgstr ""
+
+#: scripts/install.py:126
+#, python-format
+msgid "Refusing to remove an unexpected symlink: %s"
+msgstr ""
+
+#: scripts/install.py:136
+msgid ""
+"The battery permission was edited or belongs to another account; review it "
+"first."
+msgstr ""
+
+#: scripts/install.py:148
+msgid "The battery permission was edited; remove it manually."
+msgstr ""
+
+#: scripts/install.py:166 scripts/install.py:241
+msgid "An unrelated Plasma override already exists."
+msgstr ""
+
+#: scripts/install.py:187
+msgid "KDE did not load the battery integration."
+msgstr ""
+
+#: scripts/install.py:193
+msgid "The original panel and standalone battery control were restored."
+msgstr ""
+
+#: scripts/install.py:205
+msgid "Install or remove Toggle Power."
+msgstr ""
+
+#: scripts/install.py:207
+msgid "Stage files only; never change the host or services"
+msgstr ""
+
+#: scripts/install.py:208
+msgid "Target account (staging only)"
+msgstr ""
+
+#: scripts/install.py:209
+msgid "Target home (staging only)"
+msgstr ""
+
+#: scripts/install.py:215
+msgid "--system cannot be combined with --destdir"
+msgstr ""
+
+#: scripts/install.py:218
+msgid "An absolute target home without traversal is required."
+msgstr ""
+
+#: scripts/install.py:224
+msgid "The system stage must be authorized by the invoking user."
+msgstr ""
+
+#: scripts/install.py:231
+msgid "Run as your desktop user, without sudo. --user/--home are staging-only."
+msgstr ""
+
+#: scripts/install.py:236
+msgid "Install from a KDE Plasma Wayland session."
+msgstr ""
+
+#: scripts/install.py:248
+msgid "Installation complete."
+msgstr ""
+
+#: scripts/install.py:248
+msgid "Uninstalled. Battery conservation was not changed."
+msgstr ""
+
+#: src/bateria_tray.cpp:41 src/bateria_tray.cpp:43 src/bateria_tray.cpp:83
+msgid "Battery conservation"
+msgstr ""
+
+#: src/bateria_tray.cpp:47
+msgid ""
+"Limit charging to 80% to conserve your battery, or allow a full charge when "
+"needed."
+msgstr ""
+
+#: src/bateria_tray.cpp:53 src/bateria_tray.cpp:71 src/bateria_tray.cpp:88
+#: panel-bateria/LimiteCargaItem.qml:33
+msgid "Limit charge to 80%"
+msgstr ""
+
+#: src/bateria_tray.cpp:54 src/bateria_tray.cpp:88
+msgid "Allow charging to 100%"
+msgstr ""
+
+#: src/bateria_tray.cpp:58
+msgid "Open controls"
+msgstr ""
+
+#: src/bateria_tray.cpp:59
+msgid "Quit"
+msgstr ""
+
+#: src/bateria_tray.cpp:80 panel-bateria/LimiteCargaItem.qml:52
+msgid "Battery conservation enabled"
+msgstr ""
+
+#: src/bateria_tray.cpp:81 panel-bateria/LimiteCargaItem.qml:53
+msgid "Off · Charging to 100% allowed"
+msgstr ""
+
+#: src/bateria_tray.cpp:81 panel-bateria/conservationcontrol.cpp:40
+#: panel-bateria/LimiteCargaItem.qml:54
+msgid "Battery conservation is unavailable"
+msgstr ""
+
+#: src/bateria_tray.cpp:84 panel-bateria/LimiteCargaItem.qml:51
+msgid "Applying charge limit…"
+msgstr ""
+
+#: panel-bateria/conservationcontrol.cpp:14
+msgid "Could not start system authorization."
+msgstr ""
+
+#: panel-bateria/conservationcontrol.cpp:59
+msgid "Authorization cancelled. The charge limit was not changed."
+msgstr ""
+
+#: panel-bateria/conservationcontrol.cpp:61
+msgid "Could not confirm the charge limit change."
+msgstr ""

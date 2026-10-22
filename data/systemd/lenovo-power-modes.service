@@ -1,0 +1,25 @@
+[Unit]
+Description=Lenovo PL1/PL2 power profile limits
+After=systemd-modules-load.service
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 -B -u /usr/local/lib/lenovo-modes/potencia_servicio.py
+Restart=on-failure
+RestartSec=3
+RuntimeDirectory=lenovo-power-modes
+RuntimeDirectoryMode=0755
+UMask=0022
+NoNewPrivileges=yes
+PrivateTmp=yes
+PrivateNetwork=yes
+ProtectSystem=strict
+ProtectHome=yes
+ProtectControlGroups=yes
+ProtectKernelModules=yes
+ProtectKernelLogs=yes
+ReadWritePaths=/sys/devices/virtual/powercap
+
+[Install]
+WantedBy=multi-user.target

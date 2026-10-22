@@ -1,0 +1,15 @@
+[Unit]
+Description=Lenovo centered power profile indicator
+PartOf=graphical-session.target
+After=graphical-session.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 -B -u /usr/local/lib/lenovo-modes/indicador_servicio.py
+Restart=on-failure
+RestartSec=3
+NoNewPrivileges=yes
+
+[Install]
+WantedBy=graphical-session.target

@@ -1,0 +1,13 @@
+/local-backup/
+/build/
+__pycache__/
+*.py[cod]
+*.qm
+*.mo
+*.user
+*.core
+/core
+/.agents/
+/.codex/
+/.aws/
+/.qmlls.ini

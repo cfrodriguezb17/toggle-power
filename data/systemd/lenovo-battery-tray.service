@@ -1,0 +1,14 @@
+[Unit]
+Description=Lenovo battery conservation controls
+PartOf=graphical-session.target
+After=graphical-session.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+ExecStart=/usr/local/lib/lenovo-modes/lenovo-bateria --background
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=graphical-session.target

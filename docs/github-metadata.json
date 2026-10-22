@@ -1,0 +1,21 @@
+{
+  "suggested_name": "toggle-power",
+  "description": "Lenovo Linux battery charge limit at 80%, Fn+Q power-profile OSD and Intel RAPL PL1/PL2 controls for KDE Plasma Wayland on Arch Linux and CachyOS.",
+  "topics": [
+    "lenovo",
+    "linux",
+    "kde-plasma",
+    "wayland",
+    "battery",
+    "charge-limit",
+    "conservation-mode",
+    "fn-q",
+    "power-management",
+    "intel-rapl",
+    "tdp",
+    "arch-linux",
+    "cachyos",
+    "qt6",
+    "systemd"
+  ]
+}
